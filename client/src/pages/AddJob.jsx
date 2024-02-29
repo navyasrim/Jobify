@@ -6,7 +6,7 @@ import { Form, useNavigation, redirect } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import customFetch from '../utils/customFetch';
 
-export const action = async({request})=>{
+export const action = (queryClient) => async({request})=>{
     const formData = await request.formData();
     const data = Object.fromEntries(formData);
     console.log(data);
@@ -14,6 +14,7 @@ export const action = async({request})=>{
     try{
 
         await customFetch.post('/jobs',data);
+        queryClient.invalidateQueries(['jobs']);
         toast.success('Data saved successfully');
         return null;
         //return redirect('/dashboard');

@@ -8,6 +8,8 @@ import morgan from 'morgan';
 import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
 import  cloudinary  from 'cloudinary';
+import helmet from 'helmet';
+import mongoSanitize from 'express-mongo-sanitize';
 
 import {body, validationResult } from 'express-validator';
 import { validateIdPAram, validateTest } from './middleware/validationMiddleware.js';
@@ -44,15 +46,17 @@ if (process.env.NODE_ENV === 'development') {
 
 app.use(cookieParser());
 app.use(express.json());
+app.use(helmet());
+app.use(mongoSanitize());
 
 
-app.get('/', (req, res) => {
-    res.send('Hello World');
-});
+// app.get('/', (req, res) => {
+//     res.send('Hello World');
+// });
 
-app.get('/api/v1/test', (req, res) => {
-  res.json({msg: 'Hello World'});
-});
+// app.get('/api/v1/test', (req, res) => {
+//   res.json({msg: 'Hello World'});
+// });
 
 app.post('/api/v1/test',validateTest,
 
